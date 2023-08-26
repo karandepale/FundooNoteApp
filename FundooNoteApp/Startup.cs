@@ -44,12 +44,30 @@ namespace FundooNoteApp
             services.AddTransient<IUserBusiness , UserBusiness>();
             services.AddTransient<IUserRepo, UserRepo>();
 
+
+            // SWAGGER SERVICES IMPLEMENTATION:-
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "fUNDOO NOTE APPLICATION ",
+                    Version = "v1",
+                    Description = "API'S FOR FUNDOO NOTE APPLICATION IT CONTAINS FOUR MODULES " +
+                    "USER MODULE  , NOTES MODULE , COLLABORATION MODULE , LABELS MODULE",
+                });
+            });
+
         } 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-           
+            //SWAGGGER MIDDLEWARE IMPLEMENTATION:-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Register v1");
+            });
 
             if (env.IsDevelopment())
             {
