@@ -151,7 +151,6 @@ namespace RepoLayer.Services
         }
 
 
-
         //RESET PASSWORD:-
         public bool ResetPassword(string email, string newPass, string confirmPass)
         {
