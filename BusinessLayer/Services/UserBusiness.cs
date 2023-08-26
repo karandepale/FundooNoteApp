@@ -29,6 +29,19 @@ namespace BusinessLayer.Services
             }
         }
 
+        //GET ALL USERS:-
+        public List<UserEntity> GetAllUser()
+        {
+            try
+            {
+                return userRepo.GetAllUser();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
         //USER LOGIN:-
         public UserLoginResult UserLogin(UserLoginModel model)
         {
@@ -55,5 +68,17 @@ namespace BusinessLayer.Services
             }
         }
 
+        //RESET PASSWORD:-
+        public bool ResetPassword(string email, string newPass, string confirmPass)
+        {
+            try
+            {
+                return userRepo.ResetPassword(email, newPass, confirmPass);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
     }
 }

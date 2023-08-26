@@ -63,16 +63,36 @@ namespace RepoLayer.Services
         }
 
 
-        //GENERATE JWT:-
-        public string GenerateJwtToken(string Email, long UserId)
+        //GET ALL USER:-
+        public List<UserEntity> GetAllUser()
         {
-            //CLAIM IS  PIECE OF INFORMATION ABOUT THE USER FOR WHICH THE TOKEN IS BEING ISSUED.
+            try
+            {
+                var result = fundooContext.User.ToList();
+                if (result != null)
+                {
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
+        //GENERATE JWT:-
+        public string GenerateJwtToken(string Email, long UserID)
+        {
             var claims = new List<Claim>
             {
-                new Claim("UserId", UserId.ToString()),
-                new Claim("Email", Email)
-            };
-
+                new Claim("UserID", UserID.ToString()),
+                new Claim(ClaimTypes.Email, Email),
+        };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:SecretKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -132,6 +152,28 @@ namespace RepoLayer.Services
 
 
 
+        //RESET PASSWORD:-
+        public bool ResetPassword(string email, string newPass, string confirmPass)
+        {
+            try
+            {
+                if (newPass == confirmPass)
+                {
+                    var isEmailPresent = fundooContext.User.FirstOrDefault(user => user.Email == email);
+                    isEmailPresent.Password = confirmPass;
+                    fundooContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
 
 
 

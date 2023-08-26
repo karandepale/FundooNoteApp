@@ -1,7 +1,10 @@
 ﻿using BusinessLayer.Interfaces;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RepoLayer.Services;
+using System.Security.Claims;
 
 namespace FundooNoteApp.Controllers
 {
@@ -29,6 +32,24 @@ namespace FundooNoteApp.Controllers
             else
             {
                 return BadRequest(new { success = false, message = "User Registration Failed.", data = DataResult });
+            }
+        }
+
+
+        //GET ALL USER:-
+        [HttpGet]
+        [Route("GetAllUser")]
+        public IActionResult GetAllResult()
+        {
+            var result = userBusiness.GetAllUser();
+            if (result != null)
+            {
+                return Ok(new { success = true, message = "User List Getting Successful", data = result });
+            }
+            else
+            {
+                return NotFound(new { success = false, message = "User List Getting Failed", data = result });
+
             }
         }
 
@@ -66,6 +87,27 @@ namespace FundooNoteApp.Controllers
                 return NotFound(new { success = false, message = "Token not Send.", data = result });
             }
         }
+
+
+        //RESET PASSWORD:-
+        [Authorize]
+        [HttpPatch]
+        [Route("ResetPassword")]
+        public IActionResult ResetPassword(string newPass, string confirmPass)
+        {
+            var email = User.FindFirst(ClaimTypes.Email).Value;
+            var result = userBusiness.ResetPassword(email, newPass, confirmPass);
+            if (result != null)
+            {
+                return Ok(new { success = true, message = "Password Changed Successfully", data = result });
+            }
+            else
+            {
+                return NotFound(new { success = false, message = "Password not changed", data = result });
+            }
+        }
+
+
 
     }
 }

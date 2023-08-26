@@ -47,18 +47,37 @@ namespace FundooNoteApp
             services.AddTransient<IUserBusiness , UserBusiness>();
             services.AddTransient<IUserRepo, UserRepo>();
 
-
             // SWAGGER SERVICES IMPLEMENTATION:-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "fUNDOO NOTE APPLICATION ",
+                    Title = "BookStore App",
                     Version = "v1",
-                    Description = "API'S FOR FUNDOO NOTE APPLICATION IT CONTAINS FOUR MODULES " +
-                    "USER MODULE  , NOTES MODULE , COLLABORATION MODULE , LABELS MODULE",
+                    Description = "API's for BookStore Application",
+                });
+                var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "Using the Authorization header with the Bearer scheme.",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
+                c.AddSecurityDefinition("Bearer", securitySchema);
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                {
+                        securitySchema, new[] { "Bearer" } }
                 });
             });
+
 
 
             //CONFIGURATION OF JWT AUTHENTICATION:-
@@ -106,6 +125,8 @@ namespace FundooNoteApp
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
