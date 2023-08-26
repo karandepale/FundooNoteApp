@@ -49,5 +49,23 @@ namespace FundooNoteApp.Controllers
             }
         }
 
+
+
+        // FORGOT PASSWORD:-
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public IActionResult ForgotPass(ForgotPasswordModel model)
+        {
+            var result = userBusiness.ForgotPassword(model);
+            if (result != null)
+            {
+                return Ok(new { success = true, message = "Token Send Successfull.", data = result });
+            }
+            else
+            {
+                return NotFound(new { success = false, message = "Token not Send.", data = result });
+            }
+        }
+
     }
 }

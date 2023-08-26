@@ -10,5 +10,6 @@ namespace BusinessLayer.Interfaces
     {
         public UserEntity UserRegistration(UserRegistrationModel model);
         public UserLoginResult UserLogin(UserLoginModel model);
+        public string ForgotPassword(ForgotPasswordModel model);
     }
 }

@@ -80,7 +80,6 @@ namespace RepoLayer.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
         //USER LOGIN 
         public UserLoginResult UserLogin(UserLoginModel model)
         {
@@ -106,6 +105,35 @@ namespace RepoLayer.Services
             }
 
         }
+
+
+
+        //FORGOT PASSWORD ( USING MSMQ ):-
+        public string ForgotPassword(ForgotPasswordModel model)
+        {
+            try
+            {
+                var result = fundooContext.User.FirstOrDefault(u => u.Email == model.Email);
+                if (result != null)
+                {
+                    var Token = GenerateJwtToken(result.Email, result.UserID);
+                    MSMQ msmq = new MSMQ();
+                    msmq.SendData2Queue(Token);
+
+                    return Token;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
+
+
+
 
     }
 }
