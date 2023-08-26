@@ -61,7 +61,7 @@ namespace FundooNoteApp
             });
 
 
-            //JWT
+            //CONFIGURATION OF JWT AUTHENTICATION:-
             var jwtSettings = Configuration.GetSection("JwtSettings");
             var key = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
 
