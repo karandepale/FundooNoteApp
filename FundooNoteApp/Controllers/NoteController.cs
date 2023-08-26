@@ -59,11 +59,11 @@ namespace FundooNoteApp.Controllers
                 var result = noteBusiness.GetAllNotes(userId);
                 if (result != null)
                 {
-                    return Ok(new { success = true, message = "Note Created Successful", data = result });
+                    return Ok(new { success = true, message = "Getting Notes Successfull", data = result });
                 }
                 else
                 {
-                    return NotFound(new { success = false, message = "Note Creation Failed", data = result });
+                    return NotFound(new { success = false, message = "Notes Note Found", data = result });
                 }
             }
             else
@@ -72,6 +72,32 @@ namespace FundooNoteApp.Controllers
             }
         }
 
+
+
+        // GET NOTE BY ID:-
+        [Authorize]
+        [HttpGet]
+        [Route("GetNoteByID")]
+        public IActionResult GetNoteByID(long NoteID)
+        {
+            var UserID = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+            if (UserID != null && long.TryParse(UserID.Value, out long userId))
+            {
+                var result = noteBusiness.GetNoteByID(NoteID, userId);
+                if(result != null)
+                {
+                    return Ok(new { success = true, message = "Note By ID Getting Successful", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Note Not Found", data = result });
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
 
 
 
