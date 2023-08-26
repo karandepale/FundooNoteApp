@@ -30,6 +30,19 @@ namespace BusinessLayer.Services
             }
         }
 
+        //GET ALL NOTES:-
+        public List<NoteEntity> GetAllNotes(long userID)
+        {
+            try
+            {
+                return noteRepo.GetAllNotes(userID);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
 
     }
 }

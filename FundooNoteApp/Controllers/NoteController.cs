@@ -46,5 +46,35 @@ namespace FundooNoteApp.Controllers
         }
 
 
+
+        // GET ALL NOTES:-
+        [Authorize]
+        [HttpGet]
+        [Route("GetAllNotes")]
+        public IActionResult GetAllNotes()
+        {
+            var userID = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+            if (userID != null && long.TryParse(userID.Value, out long userId))
+            {
+                var result = noteBusiness.GetAllNotes(userId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Note Created Successful", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Note Creation Failed", data = result });
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+
+
+
     }
 }
