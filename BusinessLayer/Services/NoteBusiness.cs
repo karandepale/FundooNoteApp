@@ -43,6 +43,18 @@ namespace BusinessLayer.Services
             }
         }
 
+        // GET NOTE BY ID:-
+        public NoteEntity GetNoteByID(long NoteID, long UserID)
+        {
+            try
+            {
+                return noteRepo.GetNoteByID(NoteID, UserID);
+            }
+            catch (Exception EX)
+            {
+                throw;
+            }
+        }
 
     }
 }

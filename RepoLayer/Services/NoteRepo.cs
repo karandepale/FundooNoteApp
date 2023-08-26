@@ -70,6 +70,27 @@ namespace RepoLayer.Services
         }
 
 
+        //GET NOTE BY ID:-
+        public NoteEntity GetNoteByID(long NoteID , long UserID)
+        {
+            try
+            {
+                var note = fundooContext.Note.FirstOrDefault
+                (data => data.UserID == UserID && data.NoteID == NoteID);
+                if(note != null)
+                {
+                    return note;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
 
 
     }
