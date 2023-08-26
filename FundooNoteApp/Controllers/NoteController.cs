@@ -128,5 +128,32 @@ namespace FundooNoteApp.Controllers
 
 
 
+        //DELETE NOTE:-
+        [Authorize]
+        [HttpDelete]
+        [Route("DeleteNote")]
+        public IActionResult NoteDelete(long NoteID)
+        {
+            try
+            {
+                var userid = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+                if (userid != null && long.TryParse(userid.Value, out long userId))
+                {
+                    noteBusiness.DeleteNote(NoteID , userId);
+                    return Ok(new { success = true, message = "Note Deleted Successfully" });
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (System.Exception)
+            {
+                return NotFound(new { success = false, message = "Note is not Deleted" });
+            }
+           
+        }
+
+
     }
 }
