@@ -5,6 +5,7 @@ using RepoLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace RepoLayer.Services
 {
@@ -21,6 +22,20 @@ namespace RepoLayer.Services
         {
             try
             {
+                // Validate email using regular expression:-
+                string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+                if (!Regex.IsMatch(model.Email, emailPattern))
+                {
+                    return null;
+                }
+
+                // Validate password using regular expression:-
+                string passwordPattern = @"^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
+                if (!Regex.IsMatch(model.Password, passwordPattern))
+                {
+                    return null;
+                }
+
                 UserEntity userEntity = new UserEntity();
                 userEntity.FirstName = model.FirstName;
                 userEntity.LastName = model.LastName;
@@ -31,20 +46,17 @@ namespace RepoLayer.Services
                 fundooContext.User.Add(userEntity);
                 fundooContext.SaveChanges();
 
-                if(userEntity != null)
-                {
-                    return userEntity;
-                }
-                else
-                {
-                    return null;
-                }
+                return userEntity;
+
             }
             catch (Exception ex)
             {
-                throw (ex);
+                throw ex;
             }
         }
+
+
+
 
     }
 }
