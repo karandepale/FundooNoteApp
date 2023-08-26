@@ -18,7 +18,7 @@ namespace RepoLayer.Services
         }
 
 
-        //NOTE CREATE:-
+        //CREATE NOTE:-
         public NoteEntity CreateNote(NoteCreateModel model , long userid)
         {
             NoteEntity noteEntity = new NoteEntity();
@@ -126,7 +126,24 @@ namespace RepoLayer.Services
         }
 
 
-
+        //DELETE NOTE:-
+        public void DeleteNote(long NoteID , long UserID)
+        {
+            try
+            {
+                var result = fundooContext.Note.FirstOrDefault
+                    (data => data.NoteID == NoteID && data.UserID == UserID);
+                if(result != null)
+                {
+                    fundooContext.Remove(result);
+                    fundooContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
 
 
     }
