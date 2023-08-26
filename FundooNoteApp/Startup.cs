@@ -36,9 +36,10 @@ namespace FundooNoteApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddHttpContextAccessor();
 
 
-         
+
             //DATABASE CONFIGURATION:-
             services.AddDbContext<FundooContext>(opts => opts.UseSqlServer(Configuration["ConnectionStrings:FundooDataBase"]));
 
@@ -46,6 +47,12 @@ namespace FundooNoteApp
             // USER TABLE CONFIGURATION:-
             services.AddTransient<IUserBusiness , UserBusiness>();
             services.AddTransient<IUserRepo, UserRepo>();
+
+
+            // NOTE TABLE CONFIGURATION:-
+            services.AddTransient<INoteBusiness, NoteBusiness>();
+            services.AddTransient<INoteRepo, NoteRepo>();
+
 
             // SWAGGER SERVICES IMPLEMENTATION:-
             services.AddSwaggerGen(c =>

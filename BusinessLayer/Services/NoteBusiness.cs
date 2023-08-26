@@ -16,11 +16,13 @@ namespace BusinessLayer.Services
             this.noteRepo = noteRepo;
         }
 
-        public NoteEntity CreateNote(NoteCreateModel model)
+
+        //CREATE NOTE:-
+        public NoteEntity CreateNote(NoteCreateModel model , long userid)
         {
             try
             {
-                return noteRepo.CreateNote(model);
+                return noteRepo.CreateNote(model , userid);
             }
             catch (Exception ex)
             {

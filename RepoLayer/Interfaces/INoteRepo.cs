@@ -8,6 +8,6 @@ namespace RepoLayer.Interfaces
 {
     public interface INoteRepo
     {
-        public NoteEntity CreateNote(NoteCreateModel model);
+        public NoteEntity CreateNote(NoteCreateModel model, long userid);
     }
 }

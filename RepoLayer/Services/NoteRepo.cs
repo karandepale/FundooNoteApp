@@ -18,9 +18,8 @@ namespace RepoLayer.Services
 
 
         //NOTE CREATE:-
-        public NoteEntity CreateNote(NoteCreateModel model)
+        public NoteEntity CreateNote(NoteCreateModel model , long userid)
         {
-            var userid = 1;
             NoteEntity noteEntity = new NoteEntity();
             
             noteEntity.UserID = userid;
