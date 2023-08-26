@@ -93,5 +93,41 @@ namespace RepoLayer.Services
         }
 
 
+        //UPDATE NOTE:-
+        public NoteEntity UpdateNote(NoteUpdateModel model , long NoteID , long UserID)
+        {
+            try
+            {
+                var note = fundooContext.Note.FirstOrDefault
+                    (data => data.UserID == UserID && data.NoteID == NoteID);
+                if(note != null)
+                {
+                    note.Title = model.Title;
+                    note.Description = model.Description;
+                    note.Reminder = model.Reminder;
+                    note.Background = model.Background;
+                    note.Image = model.Image;
+                    note.IsArchive = model.IsArchive;
+                    note.IsPin = model.IsPin;
+                    note.IsTrash = model.IsTrash;
+
+                    fundooContext.SaveChanges();
+                    return note;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
+
+
+
     }
 }

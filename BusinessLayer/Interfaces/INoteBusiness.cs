@@ -11,5 +11,6 @@ namespace BusinessLayer.Interfaces
         public NoteEntity CreateNote(NoteCreateModel model , long userid);
         public List<NoteEntity> GetAllNotes(long userID);
         public NoteEntity GetNoteByID(long NoteID, long UserID);
+        public NoteEntity UpdateNote(NoteUpdateModel model, long NoteID, long UserID);
     }
 }
