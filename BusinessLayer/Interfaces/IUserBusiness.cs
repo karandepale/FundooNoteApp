@@ -9,5 +9,6 @@ namespace BusinessLayer.Interfaces
     public interface IUserBusiness
     {
         public UserEntity UserRegistration(UserRegistrationModel model);
+        public UserLoginResult UserLogin(UserLoginModel model);
     }
 }
