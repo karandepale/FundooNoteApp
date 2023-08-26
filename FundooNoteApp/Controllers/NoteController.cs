@@ -101,6 +101,32 @@ namespace FundooNoteApp.Controllers
 
 
 
+        // UPDATE NOTE:-
+        [Authorize]
+        [HttpPut]
+        [Route("UpdateNote")]
+        public IActionResult UpdateNote(NoteUpdateModel model , long NoteID)
+        {
+            var userid = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+            if (userid != null && long.TryParse(userid.Value, out long userId))
+            {
+                var result = noteBusiness.UpdateNote(model , NoteID, userId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Note Successfully Updated", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Note Not Update", data = result });
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
 
     }
 }
