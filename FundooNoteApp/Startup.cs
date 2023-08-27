@@ -1,5 +1,6 @@
 using BusinessLayer.Interfaces;
 using BusinessLayer.Services;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,6 +19,7 @@ using RepoLayer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -110,9 +112,19 @@ namespace FundooNoteApp
             });
 
 
+            //CLOUDINARY CONFIGURATION
+            IConfigurationSection configurationSection = Configuration.GetSection("CloudinaryConnection");
+            Account cloudinaryAccount = new Account(
+                configurationSection["cloud_name"],
+                configurationSection["cloud_api_key"],
+                configurationSection["cloud_api_secret"]
+                );
+            Cloudinary cloudinary = new Cloudinary(cloudinaryAccount);
+            services.AddSingleton(cloudinary);
 
+            services.AddTransient<FileService, FileService>();
 
-        } 
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,10 +1,13 @@
 ﻿using BusinessLayer.Interfaces;
+using BusinessLayer.Services;
 using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FundooNoteApp.Controllers
@@ -263,5 +266,31 @@ namespace FundooNoteApp.Controllers
             }
         }
 
+
+
+        //IMAGE UPLOAD:-
+        [Authorize]
+        [HttpPost]
+        [Route("UploadImage")]
+        public async Task<IActionResult> AddImage(long id, IFormFile imageFile)
+        {
+            var UserID = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+            if (UserID != null && long.TryParse(UserID.Value, out long userId))
+            {
+                Tuple<int, string> result = await noteBusiness.Image(id, userId, imageFile);
+                if (result.Item1 == 1)
+                {
+                    return Ok(new { success = true, messege = "Image Update  Sucessfully", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, messege = "Image Update  Unucessfully", data = result });
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

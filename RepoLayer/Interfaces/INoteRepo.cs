@@ -1,8 +1,10 @@
 ﻿using CommonLayer.Model;
+using Microsoft.AspNetCore.Http;
 using RepoLayer.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RepoLayer.Interfaces
 {
@@ -17,5 +19,6 @@ namespace RepoLayer.Interfaces
         public bool Archive(long NoteID, long UserID);
         public bool Pin(long NoteID, long UserID);
         public bool Trash(long NoteID, long UserID);
+        public  Task<Tuple<int, string>> Image(long id, long usedId, IFormFile imageFile);
     }
 }

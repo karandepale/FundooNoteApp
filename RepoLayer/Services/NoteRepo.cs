@@ -1,20 +1,30 @@
-﻿using CommonLayer.Model;
+﻿using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
+using CommonLayer.Model;
+using Microsoft.AspNetCore.Http;
 using RepoLayer.Context;
 using RepoLayer.Entity;
 using RepoLayer.Interfaces;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RepoLayer.Services
 {
     public class NoteRepo : INoteRepo
     {
         private readonly FundooContext fundooContext;
-        public NoteRepo(FundooContext fundooContext)
+        private readonly Cloudinary cloudinary;
+        private readonly FileService fileService;
+
+        public NoteRepo(FundooContext fundooContext , Cloudinary cloudinary, FileService fileService)
         {
             this.fundooContext = fundooContext;
+            this.cloudinary = cloudinary;
+            this.fileService = fileService;
         }
 
 
@@ -246,6 +256,46 @@ namespace RepoLayer.Services
                 throw (ex);
             }
         }
+
+
+        //IMAGE UPLOAD ON CLOUDINARY:-
+        public async Task<Tuple<int, string>> Image(long id, long usedId, IFormFile imageFile)
+        {
+            var result = fundooContext.Note.FirstOrDefault(x => x.NoteID == id && x.UserID == usedId);
+            if (result != null)
+            {
+                try
+                {
+                    var data = await fileService.SaveImage(imageFile);
+                    if (data.Item1 == 0)
+                    {
+                        return new Tuple<int, string>(0, data.Item2);
+                    }
+
+                    var UploadImage = new ImageUploadParams
+                    {
+                        File = new CloudinaryDotNet.FileDescription(imageFile.FileName, imageFile.OpenReadStream())
+                    };
+
+                    ImageUploadResult uploadResult = await cloudinary.UploadAsync(UploadImage);
+                    string imageUrl = uploadResult.SecureUrl.AbsoluteUri;
+                    result.Image = imageUrl;
+
+                    fundooContext.Note.Update(result);
+                    fundooContext.SaveChanges();
+
+                    return new Tuple<int, string>(1, "Image Uploaded Successfully");
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            return null;
+        }
+
+
 
     }
 }
