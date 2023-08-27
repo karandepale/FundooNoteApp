@@ -56,7 +56,7 @@ The Note API enables users to manage their notes efficiently, including creating
 -> Get All Notes: Retrieve a list of all notes associated with the user.
 
 
--> Get Note by ID: Retrieve a specific note using its unique ID.
+-> Get Note by ID: Retrieve a specific note using its unique ID. 
 
 
 -> Update Note: Modify the contents and attributes of an existing note.
