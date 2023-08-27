@@ -50,14 +50,32 @@ The User API allows users to perform actions related to user accounts, such as r
 NOTES API:-
 The Note API enables users to manage their notes efficiently, including creating, retrieving, updating, and deleting notes. Users can also perform actions like archiving, pinning, and searching for notes.
 
-Create Note: Add a new note with various attributes such as title, content, and color.
-Get All Notes: Retrieve a list of all notes associated with the user.
-Get Note by ID: Retrieve a specific note using its unique ID.
-Update Note: Modify the contents and attributes of an existing note.
-Delete Note: Permanently delete a note from the user's account.
-Search Note: Search for notes based on a query string.
-Archive Note: Archive a note to keep it out of the main notes list.
-Pin Note: Pin a note to keep it at the top of the notes list.
-Trash Note: Move a note to the trash, marking it for potential deletion.
-Upload Image: Attach an image to a note for visual representation.
+-> Create Note: Add a new note with various attributes such as title, content, and color.
+
+
+-> Get All Notes: Retrieve a list of all notes associated with the user.
+
+
+-> Get Note by ID: Retrieve a specific note using its unique ID.
+
+
+-> Update Note: Modify the contents and attributes of an existing note.
+
+
+-> Delete Note: Permanently delete a note from the user's account.
+
+
+-> Search Note: Search for notes based on a query string.
+
+
+-> Archive Note: Archive a note to keep it out of the main notes list.
+
+
+-> Pin Note: Pin a note to keep it at the top of the notes list.
+
+
+-> Trash Note: Move a note to the trash, marking it for potential deletion.
+
+
+-> Upload Image: Attach an image to a note for visual representation.
 
