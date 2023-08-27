@@ -21,6 +21,7 @@ Table of Contents:-
 
 
 INTRODUCTION:-
+
 FundooNoteApp is a web-based note-taking application designed to help users keep track of their tasks, ideas, and important information. It provides a range of features, including user registration, note creation, management, and collaboration. 
 
 
@@ -29,6 +30,7 @@ FundooNoteApp is a web-based note-taking application designed to help users keep
 
 
 USER API:-
+
 The User API allows users to perform actions related to user accounts, such as registration, login, password management, and more.
 
 -> Registration: Create a new user account by providing registration details.
@@ -93,6 +95,16 @@ AUTHENTICATION:-
 
 For security reasons, many of the endpoints require authentication using JSON Web Tokens (JWT). When making requests, include the JWT token in the Authorization header.
 
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+ERROR HANDLING:-
+
+The API provides detailed error messages in JSON format to help developers diagnose and resolve issues. In case of errors, the API will return an appropriate HTTP status code along with a descriptive error message.
 
 
 
