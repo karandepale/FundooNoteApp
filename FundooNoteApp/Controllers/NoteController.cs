@@ -237,5 +237,31 @@ namespace FundooNoteApp.Controllers
         }
 
 
+
+        //TRASH NOTE:-
+        [Authorize]
+        [HttpPut]
+        [Route("TrashNote")]
+        public IActionResult Trash(long NoteID)
+        {
+            var UserID = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+            if (UserID != null && long.TryParse(UserID.Value, out long userId))
+            {
+                var result = noteBusiness.Trash(NoteID, userId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Note Trashed Successfully", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Note is not Trashed", data = result });
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
     }
 }
