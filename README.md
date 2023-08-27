@@ -79,3 +79,22 @@ The Note API enables users to manage their notes efficiently, including creating
 
 -> Upload Image: Attach an image to a note for visual representation.
 
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+AUTHENTICATION:-
+
+For security reasons, many of the endpoints require authentication using JSON Web Tokens (JWT). When making requests, include the JWT token in the Authorization header.
+
+
+
+
+
+
