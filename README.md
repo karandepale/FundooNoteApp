@@ -32,8 +32,11 @@ USER API:-
 The User API allows users to perform actions related to user accounts, such as registration, login, password management, and more.
 
 -> Registration: Create a new user account by providing registration details.
+
 -> Login: Authenticate users and provide access to their accounts.
+
 -> Forgot Password: Initiate the process of resetting a forgotten password.
+
 -> Reset Password: Change the user's password after authentication.
 
 
