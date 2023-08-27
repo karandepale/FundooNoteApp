@@ -155,5 +155,31 @@ namespace FundooNoteApp.Controllers
         }
 
 
+
+        //SEARCH NOTE BY INPUT QUERY:-
+        [Authorize]
+        [HttpGet]
+        [Route("SearchNote")]
+        public IActionResult SearchNote(string query)
+        {
+            var UserID = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+            if (UserID != null && long.TryParse(UserID.Value, out long userId))
+            {
+                var result = noteBusiness.SearchNoteByQuery(query, userId);
+                if(result != null)
+                {
+                    return Ok(new { success = true, message = "Note Searched Successfully" , data=result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Note is not Deleted" , data=result });
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
     }
 }
