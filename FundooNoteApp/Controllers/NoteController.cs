@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Security.Claims;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FundooNoteApp.Controllers
 {
@@ -180,6 +181,35 @@ namespace FundooNoteApp.Controllers
                 return null;
             }
         }
+
+
+
+        //ARCHIVE NOTE:-
+        [Authorize]
+        [HttpPut]
+        [Route("Archive")]
+        public IActionResult Archive(long NoteID)
+        {
+            var UserID = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+            if (UserID != null && long.TryParse(UserID.Value, out long userId))
+            {
+                var result = noteBusiness.Archive(NoteID, userId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Note Archive Successfully", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Note is not Archived", data = result });
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
 
     }
 }
