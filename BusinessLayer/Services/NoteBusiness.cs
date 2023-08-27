@@ -82,6 +82,18 @@ namespace BusinessLayer.Services
             }
         }
 
+        //SEARCH NOTE:-
+        public List<NoteEntity> SearchNoteByQuery(string query, long UserID)
+        {
+            try
+            {
+                return noteRepo.SearchNoteByQuery(query, UserID);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
 
     }
 }

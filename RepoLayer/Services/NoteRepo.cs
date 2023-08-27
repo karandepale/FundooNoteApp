@@ -146,5 +146,34 @@ namespace RepoLayer.Services
         }
 
 
+        //SEARCH NOTE:-
+        public List<NoteEntity> SearchNoteByQuery(string query , long UserID)
+        {
+            try
+            {
+                var notes = fundooContext.Note.Where
+                    (
+                    data => data.UserID == UserID &&
+                            data.Title.Contains(query) ||
+                            data.Description.Contains(query)
+                    ).ToList();
+                if(notes != null)
+                {
+                    return notes;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
+
+
     }
 }
