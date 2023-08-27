@@ -183,6 +183,45 @@ namespace RepoLayer.Services
         }
 
 
+        //COPY NOTE:-
+        public NoteEntity CopyNote(long NoteID , long UserID)
+        {
+            try
+            {
+                var presentNote = fundooContext.Note.FirstOrDefault
+                    (data => data.UserID == UserID && data.NoteID == NoteID);
+                if(presentNote != null)
+                {
+                    NoteEntity noteEntity = new NoteEntity
+                    {
+                        UserID = presentNote.UserID,
+                        Title = presentNote.Title,
+                        Description = presentNote.Description,
+                        Reminder = presentNote.Reminder,
+                        Background = presentNote.Background,
+                        Image = presentNote.Image,
+                        IsArchive = presentNote.IsArchive,
+                        IsPin = presentNote.IsPin,
+                        IsTrash = presentNote.IsTrash,
+                    };
+                    fundooContext.Note.Add(noteEntity);
+                    fundooContext.SaveChanges();
+                    List<NoteEntity> list = new List<NoteEntity>();
+                    list.Add(noteEntity);
+                    return noteEntity;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
         //ARCHIVE NOTE:-
         public bool Archive(long NoteID , long UserID)
         {

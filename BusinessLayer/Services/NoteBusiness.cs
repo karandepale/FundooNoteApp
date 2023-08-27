@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BusinessLayer.Services
 {
@@ -91,6 +92,19 @@ namespace BusinessLayer.Services
             try
             {
                 return noteRepo.SearchNoteByQuery(query, UserID);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+        //COPY NOTE:-
+        public NoteEntity CopyNote(long NoteID, long UserID)
+        {
+            try
+            {
+                return noteRepo.CopyNote(NoteID, UserID);
             }
             catch (Exception ex)
             {

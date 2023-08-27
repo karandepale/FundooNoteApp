@@ -4,6 +4,7 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RepoLayer.Entity;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -177,6 +178,33 @@ namespace FundooNoteApp.Controllers
                 else
                 {
                     return NotFound(new { success = false, message = "Note is not Deleted" , data=result });
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+
+        //COPY NOTE:-
+        [Authorize]
+        [HttpPost]
+        [Route("CopyNote")]
+        public IActionResult CopyNote(long NoteID)
+        {
+            var UserID = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+            if (UserID != null && long.TryParse(UserID.Value, out long userId))
+            {
+                var result = noteBusiness.CopyNote(NoteID, userId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Note Copies Successfully", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Note is not Copied", data = result });
                 }
             }
             else

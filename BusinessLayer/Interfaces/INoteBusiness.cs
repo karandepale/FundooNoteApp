@@ -16,6 +16,7 @@ namespace BusinessLayer.Interfaces
         public NoteEntity UpdateNote(NoteUpdateModel model, long NoteID, long UserID);
         public void DeleteNote(long NoteID, long UserID);
         public List<NoteEntity> SearchNoteByQuery(string query, long UserID);
+        public NoteEntity CopyNote(long NoteID, long UserID);
         public bool Archive(long NoteID, long UserID);
         public bool Pin(long NoteID, long UserID);
         public bool Trash(long NoteID, long UserID);
