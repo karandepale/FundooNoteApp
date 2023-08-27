@@ -95,5 +95,17 @@ namespace BusinessLayer.Services
             }
         }
 
+        //NOTE ARCHIVE:-
+        public bool Archive(long NoteID, long UserID)
+        {
+            try
+            {
+                return noteRepo.Archive(NoteID, UserID);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
     }
 }

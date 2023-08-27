@@ -173,6 +173,30 @@ namespace RepoLayer.Services
         }
 
 
+        // IS ARCHIVE:-
+        public bool Archive(long NoteID , long UserID)
+        {
+            try
+            {
+                var notePresent = fundooContext.Note.FirstOrDefault
+                    (data => data.UserID == UserID && data.NoteID == NoteID);
+                if(notePresent != null)
+                {
+                    notePresent.IsArchive = !notePresent.IsArchive;
+                    fundooContext.SaveChanges();
+                    return notePresent.IsArchive;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
 
 
     }
