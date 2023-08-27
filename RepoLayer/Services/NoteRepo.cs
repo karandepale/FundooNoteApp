@@ -173,7 +173,7 @@ namespace RepoLayer.Services
         }
 
 
-        // IS ARCHIVE:-
+        //ARCHIVE NOTE:-
         public bool Archive(long NoteID , long UserID)
         {
             try
@@ -197,6 +197,30 @@ namespace RepoLayer.Services
             }
         }
 
+
+        //PIN NOTE:-
+        public bool Pin(long NoteID, long UserID)
+        {
+            try
+            {
+                var notePresent = fundooContext.Note.FirstOrDefault
+                    (data => data.UserID == UserID && data.NoteID == NoteID);
+                if (notePresent != null)
+                {
+                    notePresent.IsPin = !notePresent.IsPin;
+                    fundooContext.SaveChanges();
+                    return notePresent.IsPin;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
 
 
     }
