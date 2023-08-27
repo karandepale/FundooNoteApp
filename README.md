@@ -6,7 +6,11 @@ Welcome to my FundooNoteApp API documentation.FundooNoteApp is a note-taking app
  
 Table of Contents:-
 (1) Introduction
+
 (2) User API
+
 (3) Note API
+
 (4) Authentication
+
 (5) Error Handling
