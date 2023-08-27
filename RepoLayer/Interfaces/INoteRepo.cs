@@ -16,5 +16,6 @@ namespace RepoLayer.Interfaces
         public List<NoteEntity> SearchNoteByQuery(string query, long UserID);
         public bool Archive(long NoteID, long UserID);
         public bool Pin(long NoteID, long UserID);
+        public bool Trash(long NoteID, long UserID);
     }
 }

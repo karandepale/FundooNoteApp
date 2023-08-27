@@ -223,5 +223,29 @@ namespace RepoLayer.Services
         }
 
 
+        //TRASH NOTE:-
+        public bool Trash(long NoteID, long UserID)
+        {
+            try
+            {
+                var notePresent = fundooContext.Note.FirstOrDefault
+                    (data => data.UserID == UserID && data.NoteID == NoteID);
+                if (notePresent != null)
+                {
+                    notePresent.IsTrash = !notePresent.IsTrash;
+                    fundooContext.SaveChanges();
+                    return notePresent.IsTrash;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
     }
 }

@@ -120,5 +120,18 @@ namespace BusinessLayer.Services
                 throw (ex);
             }
         }
+
+        //NOTE TRASH:-
+        public bool Trash(long NoteID, long UserID)
+        {
+            try
+            {
+                return noteRepo.Trash(NoteID, UserID);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
     }
 }
