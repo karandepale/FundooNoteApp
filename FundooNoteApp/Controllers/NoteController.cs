@@ -187,7 +187,7 @@ namespace FundooNoteApp.Controllers
         //ARCHIVE NOTE:-
         [Authorize]
         [HttpPut]
-        [Route("Archive")]
+        [Route("ArchiveNote")]
         public IActionResult Archive(long NoteID)
         {
             var UserID = User.Claims.FirstOrDefault(data => data.Type == "UserID");
@@ -209,6 +209,32 @@ namespace FundooNoteApp.Controllers
             }
         }
 
+
+
+        //PIN NOTE:-
+        [Authorize]
+        [HttpPut]
+        [Route("PinNote")]
+        public IActionResult Pin(long NoteID)
+        {
+            var UserID = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+            if (UserID != null && long.TryParse(UserID.Value, out long userId))
+            {
+                var result = noteBusiness.Pin(NoteID, userId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Note Pinned Successfully", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Note is not Pinned", data = result });
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
 
 
     }
