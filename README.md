@@ -14,3 +14,6 @@ Table of Contents:-
 (4) Authentication
 
 (5) Error Handling
+
+
+INTRODUCTION:-FundooNoteApp is a web-based note-taking application designed to help users keep track of their tasks, ideas, and important information. It provides a range of features, including user registration, note creation, management, and collaboration. 
