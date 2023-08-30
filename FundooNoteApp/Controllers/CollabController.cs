@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Interfaces;
 using BusinessLayer.Services;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace FundooNoteApp.Controllers
 
 
         //CREATE COLLAB:-
+        [Authorize]
         [HttpPost]
         [Route("CreateCollab")]
         public IActionResult CreateCollab(CollabCreateModel model , long NoteID)
@@ -43,6 +45,35 @@ namespace FundooNoteApp.Controllers
                 return Unauthorized();
             }
         }
+
+
+
+        //GET ALL COLLABS FOR A NOTE:-
+        [Authorize]
+        [HttpGet]
+        [Route("GetAllCollabs")]
+        public IActionResult GetAllCollab(long NoteID)
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(u => u.Type == "UserID");
+            if (userIdClaim != null && long.TryParse(userIdClaim.Value, out long userId))
+            {
+                var result = collabBusiness.GetCollabsForANote(NoteID);
+
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Collab getting Successful", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Collab Not Found", data = result });
+                }
+            }
+            else
+            {
+                return Unauthorized();
+            }
+        }
+
 
 
     }
