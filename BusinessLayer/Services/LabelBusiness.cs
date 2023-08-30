@@ -1,4 +1,6 @@
 ﻿using BusinessLayer.Interfaces;
+using CommonLayer.Model;
+using RepoLayer.Entity;
 using RepoLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,17 @@ namespace BusinessLayer.Services
             this.labelRepo = labelRepo;
         }
 
+        public LabelEntity CreateLabel(LabelCreateModel model, long NoteID)
+        {
+            try
+            {
+                return labelRepo.CreateLabel(model, NoteID);
+            }
+            catch (Exception ex)
+            {
+                throw(ex);
+            }
+        }
 
 
     }
