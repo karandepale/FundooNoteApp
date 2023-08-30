@@ -75,5 +75,29 @@ namespace RepoLayer.Services
 
 
 
+        // DELETE COLLAB:-
+        public void DeleteACollab(long CollabID)
+        {
+            try
+            {
+                var collabEntity = fundooContext.Collab.FirstOrDefault(c => c.CollabID == CollabID);
+
+                if (collabEntity != null)
+                {
+                    fundooContext.Collab.Remove(collabEntity);
+                    fundooContext.SaveChanges();
+                }
+                else
+                {
+                    throw new InvalidOperationException("Collaboration not found for the given CollabID.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
 }
