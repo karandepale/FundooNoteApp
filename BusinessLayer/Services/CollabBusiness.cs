@@ -32,5 +32,22 @@ namespace BusinessLayer.Services
         }
 
 
+<<<<<<< HEAD
+=======
+        //GET ALL COLLABS:-
+        public CollabEntity GetCollabsForANote(long NoteID)
+        {
+            try
+            {
+                return collabRepo.GetCollabsForANote(NoteID);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
+>>>>>>> Dev
     }
 }

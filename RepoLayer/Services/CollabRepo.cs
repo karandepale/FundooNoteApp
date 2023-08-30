@@ -4,6 +4,10 @@ using RepoLayer.Entity;
 using RepoLayer.Interfaces;
 using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
+=======
+using System.Linq;
+>>>>>>> Dev
 using System.Text;
 
 namespace RepoLayer.Services
@@ -49,5 +53,33 @@ namespace RepoLayer.Services
 
 
 
+<<<<<<< HEAD
+=======
+        // GET ALL COLLABS:-
+        public CollabEntity GetCollabsForANote(long NoteID)
+        {
+            try
+            {
+                var collabList = fundooContext.Collab.FirstOrDefault
+                    (data => data.NoteID == NoteID );
+
+                if(collabList != null)
+                {
+                    return collabList;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
+
+>>>>>>> Dev
     }
 }
