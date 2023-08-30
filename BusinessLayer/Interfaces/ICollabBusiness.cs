@@ -12,6 +12,10 @@ namespace BusinessLayer.Interfaces
 <<<<<<< HEAD
 =======
         public CollabEntity GetCollabsForANote(long NoteID);
+<<<<<<< HEAD
 >>>>>>> Dev
+=======
+        public void DeleteACollab(long CollabID);
+>>>>>>> Collab_DeleteCollab_API
     }
 }

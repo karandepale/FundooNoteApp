@@ -48,6 +48,21 @@ namespace BusinessLayer.Services
         }
 
 
+<<<<<<< HEAD
 >>>>>>> Dev
+=======
+        //DELETE COLLAB:-
+        public void DeleteACollab(long CollabID)
+        {
+            try
+            {
+                collabRepo.DeleteACollab(CollabID);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+>>>>>>> Collab_DeleteCollab_API
     }
 }

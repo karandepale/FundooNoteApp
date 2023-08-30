@@ -4,6 +4,7 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 
 namespace FundooNoteApp.Controllers
@@ -76,5 +77,21 @@ namespace FundooNoteApp.Controllers
 
 
 
+        //DELETE COLLAB:-
+        [Authorize]
+        [HttpDelete]
+        [Route("DeleteCollab")]
+        public IActionResult DeleteCollab(long CollabID)
+        {
+            try
+            {
+                collabBusiness.DeleteACollab(CollabID);
+                return Ok(new { success = true, message = "Collab Deleted Successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = "Collab Deletion Failed", error = ex.Message });
+            }
+        }
     }
 }
