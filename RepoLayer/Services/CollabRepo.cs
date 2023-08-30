@@ -4,10 +4,7 @@ using RepoLayer.Entity;
 using RepoLayer.Interfaces;
 using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
-=======
 using System.Linq;
->>>>>>> Dev
 using System.Text;
 
 namespace RepoLayer.Services
@@ -53,8 +50,6 @@ namespace RepoLayer.Services
 
 
 
-<<<<<<< HEAD
-=======
         // GET ALL COLLABS:-
         public CollabEntity GetCollabsForANote(long NoteID)
         {
@@ -80,9 +75,6 @@ namespace RepoLayer.Services
 
 
 
-<<<<<<< HEAD
->>>>>>> Dev
-=======
         // DELETE COLLAB:-
         public void DeleteACollab(long CollabID)
         {
@@ -107,6 +99,5 @@ namespace RepoLayer.Services
         }
 
 
->>>>>>> Collab_DeleteCollab_API
     }
 }
