@@ -32,8 +32,6 @@ namespace BusinessLayer.Services
         }
 
 
-<<<<<<< HEAD
-=======
         //GET ALL COLLABS:-
         public CollabEntity GetCollabsForANote(long NoteID)
         {
@@ -48,9 +46,6 @@ namespace BusinessLayer.Services
         }
 
 
-<<<<<<< HEAD
->>>>>>> Dev
-=======
         //DELETE COLLAB:-
         public void DeleteACollab(long CollabID)
         {
@@ -63,6 +58,5 @@ namespace BusinessLayer.Services
                 throw (ex);
             }
         }
->>>>>>> Collab_DeleteCollab_API
     }
 }
