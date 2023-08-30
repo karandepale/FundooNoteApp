@@ -56,6 +56,11 @@ namespace FundooNoteApp
             services.AddTransient<INoteRepo, NoteRepo>();
 
 
+            // COLLAB TABLE CONFIGURATION:-
+            services.AddTransient<ICollabBusiness , CollabBusiness>();
+            services.AddTransient<ICollabRepo, CollabRepo>();
+
+
             // SWAGGER SERVICES IMPLEMENTATION:-
             services.AddSwaggerGen(c =>
             {
