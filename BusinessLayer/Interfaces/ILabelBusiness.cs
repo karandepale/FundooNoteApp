@@ -10,5 +10,6 @@ namespace BusinessLayer.Interfaces
     {
         public LabelEntity CreateLabel(LabelCreateModel model, long NoteID);
         public List<LabelEntity> GetAllLabels(long NoteId);
+        public LabelEntity UpdateLabel(LabelUpdateModel model, long LabelID);
     }
 }

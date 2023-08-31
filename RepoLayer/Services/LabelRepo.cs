@@ -64,6 +64,33 @@ namespace RepoLayer.Services
 
 
 
+        // UPDATE LABEL:-
+        public LabelEntity UpdateLabel(LabelUpdateModel model, long LabelID)
+        {
+            try
+            {
+                var result = fundooContext.Label.FirstOrDefault
+                    (table => table.LabelID == LabelID);
+
+                if (result != null)
+                {
+                    result.Title = model.Title;
+                    fundooContext.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
+
 
     }
 }

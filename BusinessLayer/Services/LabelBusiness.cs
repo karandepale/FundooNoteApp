@@ -45,5 +45,18 @@ namespace BusinessLayer.Services
         }
 
 
+        //UPDATE LABEL:-
+        public LabelEntity UpdateLabel(LabelUpdateModel model, long LabelID)
+        {
+            try
+            {
+                return labelRepo.UpdateLabel(model, LabelID);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
     }
 }
