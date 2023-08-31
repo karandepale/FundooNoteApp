@@ -91,6 +91,32 @@ namespace RepoLayer.Services
 
 
 
+        // DELETE LABEL:-
+        public void DeleteLabel(long LabelID)
+        {
+            try
+            {
+                var result = fundooContext.Label.FirstOrDefault
+                    (data => data.LabelID == LabelID);
+
+                if (result != null)
+                {
+                    fundooContext.Label.Remove(result);
+                    fundooContext.SaveChanges();
+                }
+                else
+                {
+                    throw new InvalidOperationException("Label not found for the given LabelID.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
+
 
     }
 }

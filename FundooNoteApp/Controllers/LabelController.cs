@@ -4,6 +4,7 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 
 namespace FundooNoteApp.Controllers
@@ -75,7 +76,7 @@ namespace FundooNoteApp.Controllers
 
 
 
-        //UPDATE LABEL:-
+        // UPDATE LABEL:-
         [Authorize]
         [HttpPut]
         [Route("UpdateLabel")]
@@ -101,5 +102,23 @@ namespace FundooNoteApp.Controllers
             }
         }
 
+
+
+        // DELETE LABEL:-
+        [Authorize]
+        [HttpDelete]
+        [Route("DeleteLabel")]
+        public IActionResult DeleteLabel(long LabelID)
+        {
+            try
+            {
+                labelBusiness.DeleteLabel(LabelID);
+                return Ok(new { success = true, message = "Label Deleted Successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = "Label Deletion Failed", error = ex.Message });
+            }
+        }
     }
 }
