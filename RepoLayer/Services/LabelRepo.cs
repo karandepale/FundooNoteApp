@@ -4,6 +4,7 @@ using RepoLayer.Entity;
 using RepoLayer.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RepoLayer.Services
@@ -45,6 +46,21 @@ namespace RepoLayer.Services
             }
         }
 
+
+
+        // GET ALL LABELS FOR A PARTICULAR NOTE:-
+        public List<LabelEntity> GetAllLabels(long NoteId)
+        {
+            try
+            {
+                var result = fundooContext.Label.Where(data => data.NoteID == NoteId).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
 
 
 

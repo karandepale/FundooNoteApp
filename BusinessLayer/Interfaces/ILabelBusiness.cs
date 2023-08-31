@@ -9,5 +9,6 @@ namespace BusinessLayer.Interfaces
     public interface ILabelBusiness
     {
         public LabelEntity CreateLabel(LabelCreateModel model, long NoteID);
+        public List<LabelEntity> GetAllLabels(long NoteId);
     }
 }
