@@ -105,7 +105,6 @@ namespace FundooNoteApp.Controllers
 
 
         // DELETE LABEL:-
-        [Authorize]
         [HttpDelete]
         [Route("DeleteLabel")]
         public IActionResult DeleteLabel(long LabelID)
