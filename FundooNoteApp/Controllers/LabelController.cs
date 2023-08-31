@@ -73,5 +73,33 @@ namespace FundooNoteApp.Controllers
             }
         }
 
+
+
+        //UPDATE LABEL:-
+        [Authorize]
+        [HttpPut]
+        [Route("UpdateLabel")]
+        public IActionResult UpdateLabel(LabelUpdateModel model , long NoteID)
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(u => u.Type == "UserID");
+            if (userIdClaim != null && long.TryParse(userIdClaim.Value, out long userId))
+            {
+                var result = labelBusiness.UpdateLabel(model , NoteID);
+
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Label Successfully updated", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Unable to update Label", data = result });
+                }
+            }
+            else
+            {
+                return Unauthorized();
+            }
+        }
+
     }
 }
