@@ -54,6 +54,7 @@ The User Module allows users to perform actions related to user accounts, such a
 
 
 NOTES MODULE:-
+
 The Note Module enables users to manage their notes efficiently, including creating, retrieving, updating, and deleting notes. Users can also perform actions like archiving, pinning, and searching for notes.
 
 -> Create Note: Add a new note with various attributes such as title, content, and color.
@@ -92,6 +93,7 @@ The Note Module enables users to manage their notes efficiently, including creat
 
 
 COLLAB MODULE:-
+
 The collab module handle collaboration-related actions in  FundooNoteApp API. They require authentication using JSON Web Tokens (JWT) to ensure that only authorized users can perform these actions.
 
 -> CreateCollab:   An authenticated user to create a collaboration for a specific note. Collaborations typically involve sharing or allowing other users access to a note. 
@@ -106,6 +108,13 @@ The collab module handle collaboration-related actions in  FundooNoteApp API. Th
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+LABELS MODULE:-
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 AUTHENTICATION:-
