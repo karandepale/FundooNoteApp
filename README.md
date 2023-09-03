@@ -8,13 +8,17 @@ Table of Contents:-
 
 (1) Introduction
 
-(2) User API
+(2) User Module
 
-(3) Note API
+(3) Note Module
 
-(4) Authentication
+(4) Collab Module
+
+(5) Label Module
+
+(6) Authentication
  
-(5) Error Handling
+(7) Error Handling
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
