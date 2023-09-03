@@ -110,8 +110,18 @@ The collab module handle collaboration-related actions in  FundooNoteApp API. Th
 
 LABELS MODULE:-
 
+The label module handle  label-related actions in  FundooNoteApp API project, Users can create, retrieve, update, and delete labels associated with their notes.
+
+-> CreateLabel:  An authenticated user to create a new label associated with a specific note. It takes a NoteID as parameter.
 
 
+-> GetAllLabels: user Can retrieve all labels associated with a specific note identified by NoteID.
+
+
+-> UpdateLabel: An authenticated user to update the attributes of an existing label associated with a specific note. 
+
+
+-> DeleteLabel: An authenticated user can delete  a specific label identified by LabelID.
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
