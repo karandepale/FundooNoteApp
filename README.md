@@ -33,9 +33,9 @@ FundooNoteApp is a web-based note-taking application designed to help users keep
 
 
 
-USER API:-
+USER MODULE:-
 
-The User API allows users to perform actions related to user accounts, such as registration, login, password management, and more.
+The User Module allows users to perform actions related to user accounts, such as registration, login, password management, and more.
 
 -> Registration: Create a new user account by providing registration details.
 
@@ -53,8 +53,8 @@ The User API allows users to perform actions related to user accounts, such as r
 
 
 
-NOTES API:-
-The Note API enables users to manage their notes efficiently, including creating, retrieving, updating, and deleting notes. Users can also perform actions like archiving, pinning, and searching for notes.
+NOTES MODULE:-
+The Note Module enables users to manage their notes efficiently, including creating, retrieving, updating, and deleting notes. Users can also perform actions like archiving, pinning, and searching for notes.
 
 -> Create Note: Add a new note with various attributes such as title, content, and color.
 
@@ -91,7 +91,20 @@ The Note API enables users to manage their notes efficiently, including creating
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+COLLAB MODULE:-
+The collab module handle collaboration-related actions in  FundooNoteApp API. They require authentication using JSON Web Tokens (JWT) to ensure that only authorized users can perform these actions.
 
+-> CreateCollab:   An authenticated user to create a collaboration for a specific note. Collaborations typically involve sharing or allowing other users access to a note. 
+
+
+-> GetAllCollabs:   An authenticated user to retrieve all collaborations associated with a specific note.  It takes the NoteID as a parameter. After verifying the user's authentication.
+
+
+-> DeleteCollab:  An authenticated user can delete a specific collaboration identified by CollabID.
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
