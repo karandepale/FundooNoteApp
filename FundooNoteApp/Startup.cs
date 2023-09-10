@@ -41,6 +41,16 @@ namespace FundooNoteApp
             services.AddHttpContextAccessor();
 
 
+            //CORS SERVICE CONFIGURATION:-
+            services.AddCors(data =>
+            {
+                data.AddPolicy(
+                    name: "AllowOrigin",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                    });
+            });
 
             //DATABASE CONFIGURATION:-
             services.AddDbContext<FundooContext>(opts => opts.UseSqlServer(Configuration["ConnectionStrings:FundooDataBase"]));
@@ -134,6 +144,11 @@ namespace FundooNoteApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+
+            app.UseCors("AllowOrigin");
+
+
             //SWAGGGER MIDDLEWARE IMPLEMENTATION:-
             app.UseSwagger();
             app.UseSwaggerUI(c =>

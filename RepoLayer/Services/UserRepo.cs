@@ -16,7 +16,7 @@ namespace RepoLayer.Services
 {
     public class UserRepo : IUserRepo
     {
-        private readonly FundooContext fundooContext;
+        private readonly FundooContext fundooContext; 
         private readonly IConfiguration configuration;
         public UserRepo(FundooContext fundooContext , IConfiguration configuration)
         {

@@ -13,7 +13,7 @@ namespace RepoLayer.Services
     {
         private readonly FundooContext fundooContext;
         public CollabRepo(FundooContext fundooContext)
-        {
+        {  
             this.fundooContext = fundooContext;
         }
 
@@ -51,12 +51,12 @@ namespace RepoLayer.Services
 
 
         // GET ALL COLLABS:-
-        public CollabEntity GetCollabsForANote(long NoteID)
+        public List<CollabEntity> GetCollabsForANote(long NoteID)
         {
             try
             {
-                var collabList = fundooContext.Collab.FirstOrDefault
-                    (data => data.NoteID == NoteID );
+                var collabList = fundooContext.Collab.Where
+                    (data => data.NoteID == NoteID).ToList();
 
                 if(collabList != null)
                 {

@@ -64,7 +64,7 @@ namespace BusinessLayer.Services
         {
             try
             {
-                return labelRepo.DeleteLabel(LabelID);
+                 labelRepo.DeleteLabel(LabelID);
             }
             catch (Exception ex)
             {
