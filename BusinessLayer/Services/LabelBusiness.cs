@@ -18,11 +18,11 @@ namespace BusinessLayer.Services
 
 
         //CREATE LABEL:-
-        public LabelEntity CreateLabel(LabelCreateModel model, long NoteID)
+        public LabelEntity CreateLabel(LabelCreateModel model, long NoteID, long UserID)
         {
             try
             {
-                return labelRepo.CreateLabel(model, NoteID);
+                return labelRepo.CreateLabel(model, NoteID , UserID);
             }
             catch (Exception ex)
             {

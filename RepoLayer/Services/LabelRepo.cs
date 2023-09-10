@@ -20,13 +20,14 @@ namespace RepoLayer.Services
 
 
         // CREATE LABEL:-
-        public LabelEntity CreateLabel(LabelCreateModel model, long NoteID)
+        public LabelEntity CreateLabel(LabelCreateModel model, long NoteID , long UserID)
         {
             try
             {
                 LabelEntity label = new LabelEntity();
                 label.Title = model.Title;
                 label.NoteID = NoteID;
+                label.UserID = UserID;
 
                 fundooContext.Label.Add(label);
                 fundooContext.SaveChanges();

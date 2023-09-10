@@ -29,7 +29,7 @@ namespace FundooNoteApp.Controllers
             var userIdClaim = User.Claims.FirstOrDefault(u => u.Type == "UserID");
             if (userIdClaim != null && long.TryParse(userIdClaim.Value, out long userId))
             {
-                var result = labelBusiness.CreateLabel(model, NoteID);
+                var result = labelBusiness.CreateLabel(model, NoteID , userId);
 
                 if (result != null)
                 {
@@ -80,12 +80,12 @@ namespace FundooNoteApp.Controllers
         [Authorize]
         [HttpPut]
         [Route("UpdateLabel")]
-        public IActionResult UpdateLabel(LabelUpdateModel model , long NoteID)
+        public IActionResult UpdateLabel(LabelUpdateModel model , long LabelID)
         {
             var userIdClaim = User.Claims.FirstOrDefault(u => u.Type == "UserID");
             if (userIdClaim != null && long.TryParse(userIdClaim.Value, out long userId))
             {
-                var result = labelBusiness.UpdateLabel(model , NoteID);
+                var result = labelBusiness.UpdateLabel(model , LabelID);
 
                 if (result != null)
                 {
