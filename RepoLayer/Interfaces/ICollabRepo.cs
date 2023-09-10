@@ -9,6 +9,6 @@ namespace RepoLayer.Interfaces
     public interface ICollabRepo
     {
         public CollabEntity CreateCollab(CollabCreateModel model, long NoteID, long userId);
-        public CollabEntity GetCollabsForANote(long NoteID);
+        public List<CollabEntity> GetCollabsForANote(long NoteID);
     }
 }

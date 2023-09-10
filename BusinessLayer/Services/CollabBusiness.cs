@@ -33,7 +33,7 @@ namespace BusinessLayer.Services
 
 
         //GET ALL COLLABS:-
-        public CollabEntity GetCollabsForANote(long NoteID)
+        public List<CollabEntity> GetCollabsForANote(long NoteID)
         {
             try
             {
