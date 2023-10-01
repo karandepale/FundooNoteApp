@@ -4,8 +4,13 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using RepoLayer.Entity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FundooNoteApp.Controllers
 {
@@ -14,9 +19,11 @@ namespace FundooNoteApp.Controllers
     public class CollabController : ControllerBase
     {
         private readonly ICollabBusiness collabBusiness;
-        public CollabController(ICollabBusiness collabBusiness)
+        private readonly IDistributedCache distributedCache;
+        public CollabController(ICollabBusiness collabBusiness , IDistributedCache distributedCache)
         {
             this.collabBusiness = collabBusiness;
+            this.distributedCache = distributedCache;
         }
 
 
@@ -50,28 +57,73 @@ namespace FundooNoteApp.Controllers
 
 
         //GET ALL COLLABS FOR A NOTE:-
+        /* [Authorize]
+         [HttpGet]
+         [Route("GetAllCollabs")]
+         public IActionResult GetAllCollab(long NoteID)
+         {
+             var userIdClaim = User.Claims.FirstOrDefault(u => u.Type == "UserID");
+             if (userIdClaim != null && long.TryParse(userIdClaim.Value, out long userId))
+             {
+                 var result = collabBusiness.GetCollabsForANote(NoteID);
+
+                 if (result != null)
+                 {
+                     return Ok(new { success = true, message = "Collab getting Successful", data = result });
+                 }
+                 else
+                 {
+                     return NotFound(new { success = false, message = "Collab Not Found", data = result });
+                 }
+             }
+             else
+             {
+                 return Unauthorized();
+             }
+         }*/
+
+
+
+        // COLLAB LIST USING RADDIS CACHE:-
         [Authorize]
         [HttpGet]
         [Route("GetAllCollabs")]
-        public IActionResult GetAllCollab(long NoteID)
+        public async Task<IActionResult> GetCollabs(long NoteID)
         {
-            var userIdClaim = User.Claims.FirstOrDefault(u => u.Type == "UserID");
-            if (userIdClaim != null && long.TryParse(userIdClaim.Value, out long userId))
-            {
-                var result = collabBusiness.GetCollabsForANote(NoteID);
+            var key = "collabs";
+            var cacheData = await distributedCache.GetStringAsync(key);
+            List<CollabEntity> result;
 
-                if (result != null)
-                {
-                    return Ok(new { success = true, message = "Collab getting Successful", data = result });
-                }
-                else
-                {
-                    return NotFound(new { success = false, message = "Collab Not Found", data = result });
-                }
+            if (cacheData != null)
+            {
+                result = JsonConvert.DeserializeObject<List<CollabEntity>>(cacheData);
             }
             else
             {
-                return Unauthorized();
+                var userIdClaim = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+                if (userIdClaim != null && long.TryParse(userIdClaim.Value, out long userId))
+                {
+                    result = collabBusiness.GetCollabsForANote(NoteID);
+                    cacheData = JsonConvert.SerializeObject(result);
+
+                    await distributedCache.SetStringAsync(key, cacheData, new DistributedCacheEntryOptions
+                    {
+                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10),
+                        SlidingExpiration = TimeSpan.FromMinutes(2)
+                    });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Invalid user ID claim" });
+                }
+            }
+            if (result != null)
+            {
+                return Ok(new { success = true, message = "Collabs Getting Successfully", data = result });
+            }
+            else
+            {
+                return NotFound(new { success = false, message = "Collabs  Not Found", data = result });
             }
         }
 
