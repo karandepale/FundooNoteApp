@@ -3,8 +3,14 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using RepoLayer.Entity;
 using RepoLayer.Services;
+using System.Collections.Generic;
+using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace FundooNoteApp.Controllers
 {
@@ -13,9 +19,11 @@ namespace FundooNoteApp.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserBusiness userBusiness;
-        public UserController(IUserBusiness userBusiness)
+        private readonly IDistributedCache distributedCache;
+        public UserController(IUserBusiness userBusiness , IDistributedCache distributedCache)
         {
             this.userBusiness = userBusiness;
+            this.distributedCache = distributedCache;
         }
 
 
@@ -37,21 +45,65 @@ namespace FundooNoteApp.Controllers
 
 
         //GET ALL USER:-
+        /*   [HttpGet]
+           [Route("GetAllUser")]
+           public IActionResult GetAllResult()
+           {
+               var result = userBusiness.GetAllUser();
+               if (result != null)
+               {
+                   return Ok(new { success = true, message = "User List Getting Successful", data = result });
+               }
+               else
+               {
+                   return NotFound(new { success = false, message = "User List Getting Failed", data = result });
+
+               }
+           }*/
+
+
+        //RADDIS CACHE FOR GET USER LIST:-
         [HttpGet]
-        [Route("GetAllUser")]
-        public IActionResult GetAllResult()
+        [Route("UserList")]
+        public async Task<IActionResult> GetAllResult()
         {
-            var result = userBusiness.GetAllUser();
-            if (result != null)
+            var cacheKey = "userList";
+            var serializedUserList = await distributedCache.GetStringAsync(cacheKey);
+
+            List<UserEntity> userList;
+
+            if (serializedUserList != null)
             {
-                return Ok(new { success = true, message = "User List Getting Successful", data = result });
+                userList = JsonConvert.DeserializeObject<List<UserEntity>>(serializedUserList);
             }
             else
             {
-                return NotFound(new { success = false, message = "User List Getting Failed", data = result });
+                userList = userBusiness.GetAllUser();
 
+                serializedUserList = JsonConvert.SerializeObject(userList);
+                await distributedCache.SetStringAsync(cacheKey, serializedUserList, new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10),
+                    SlidingExpiration = TimeSpan.FromMinutes(2)
+                });
+            }
+
+            if (userList != null)
+            {
+                return Ok(new { success = true, message = "User List Getting Successful", data = userList });
+            }
+            else
+            {
+                return NotFound(new { success = false, message = "User List Getting Failed" });
             }
         }
+
+
+
+
+
+
+
 
 
         // USER LOGIN:-
