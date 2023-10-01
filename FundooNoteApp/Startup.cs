@@ -41,7 +41,11 @@ namespace FundooNoteApp
             services.AddHttpContextAccessor();
 
 
-
+            //RADDIS CONFIGURATION :-
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost:6379";
+            });
 
 
             //CORS SERVICE CONFIGURATION:-
