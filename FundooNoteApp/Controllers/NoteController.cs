@@ -4,8 +4,12 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using RepoLayer.Entity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -18,10 +22,12 @@ namespace FundooNoteApp.Controllers
     public class NoteController : ControllerBase
     {
         private readonly INoteBusiness noteBusiness;
+        private readonly IDistributedCache distributedCache;
 
-        public NoteController(INoteBusiness noteBusiness )
+        public NoteController(INoteBusiness noteBusiness , IDistributedCache distributedCache)
         {
             this.noteBusiness = noteBusiness;
+            this.distributedCache = distributedCache;
         }
 
         //CREATE NOTE:-
@@ -53,29 +59,79 @@ namespace FundooNoteApp.Controllers
 
 
         // GET ALL NOTES:-
+        /* [Authorize]
+         [HttpGet]
+         [Route("GetAllNotes")]
+         public IActionResult GetAllNotes()
+         {
+             var userID = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+             if (userID != null && long.TryParse(userID.Value, out long userId))
+             {
+                 var result = noteBusiness.GetAllNotes(userId);
+                 if (result != null)
+                 {
+                     return Ok(new { success = true, message = "Getting Notes Successfull", data = result });
+                 }
+                 else
+                 {
+                     return NotFound(new { success = false, message = "Notes Note Found", data = result });
+                 }
+             }
+             else
+             {
+                 return null;
+             }
+         }
+ */
+
+
+
+
+        // GETTING NOTES LIST USING RADDIS CACHE :-
         [Authorize]
         [HttpGet]
         [Route("GetAllNotes")]
-        public IActionResult GetAllNotes()
+        public async Task<IActionResult> GetAllNotes()
         {
-            var userID = User.Claims.FirstOrDefault(data => data.Type == "UserID");
-            if (userID != null && long.TryParse(userID.Value, out long userId))
+            var cacheKey = $"noteList_{User.FindFirst("UserId").Value}";
+            var serializedNotesList = await distributedCache.GetStringAsync(cacheKey);
+            List<NoteEntity> notesList;
+
+            if (serializedNotesList != null)
             {
-                var result = noteBusiness.GetAllNotes(userId);
-                if (result != null)
-                {
-                    return Ok(new { success = true, message = "Getting Notes Successfull", data = result });
-                }
-                else
-                {
-                    return NotFound(new { success = false, message = "Notes Note Found", data = result });
-                }
+                notesList = JsonConvert.DeserializeObject<List<NoteEntity>>(serializedNotesList);
             }
             else
             {
-                return null;
+                var userIdClaim = User.Claims.FirstOrDefault(data => data.Type == "UserID");
+                if (userIdClaim != null && long.TryParse(userIdClaim.Value, out long userId))
+                {
+                    notesList = noteBusiness.GetAllNotes(userId);
+                    serializedNotesList = JsonConvert.SerializeObject(notesList);
+
+                    await distributedCache.SetStringAsync(cacheKey, serializedNotesList,
+                        new DistributedCacheEntryOptions
+                        {
+                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10),
+                            SlidingExpiration = TimeSpan.FromMinutes(2)
+                        });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Invalid user ID claim" });
+                }
+            }
+
+            if (notesList != null)
+            {
+                return Ok(new { success = true, message = "Notes getting successful.", data = notesList });
+            }
+            else
+            {
+                return NotFound(new { success = false, message = "Notes not found", data = notesList });
             }
         }
+
 
 
 
