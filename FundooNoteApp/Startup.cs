@@ -41,6 +41,9 @@ namespace FundooNoteApp
             services.AddHttpContextAccessor();
 
 
+
+
+
             //CORS SERVICE CONFIGURATION:-
             services.AddCors(data =>
             {

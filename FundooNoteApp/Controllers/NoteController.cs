@@ -217,7 +217,7 @@ namespace FundooNoteApp.Controllers
 
         //ARCHIVE NOTE:-
         [Authorize]
-        [HttpPut]
+        [HttpPatch]
         [Route("ArchiveNote")]
         public IActionResult Archive(long NoteID)
         {
@@ -271,7 +271,7 @@ namespace FundooNoteApp.Controllers
 
         //TRASH NOTE:-
         [Authorize]
-        [HttpPut]
+        [HttpPatch]
         [Route("TrashNote")]
         public IActionResult Trash(long NoteID)
         {

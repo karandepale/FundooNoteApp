@@ -118,7 +118,7 @@ namespace RepoLayer.Services
                     note.Background = model.Background;
                     note.Image = model.Image;
                     note.IsArchive = model.IsArchive;
-                    note.IsPin = model.IsPin;
+                    note.IsPin = model.IsPin; 
                     note.IsTrash = model.IsTrash;
 
                     fundooContext.SaveChanges();
